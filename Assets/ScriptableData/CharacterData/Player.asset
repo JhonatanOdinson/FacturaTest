@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4dde18b7fbadc44bad7be86e960401d, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  uniqueId: a80eba50-fde6-42dd-be26-f2960820711f
+  uniqueShortId: 1
+  _isPlayer: 1
+  _vitality: 100
+  _reward: 0
+  _weaponData: {fileID: 11400000, guid: 85ef1e4bb05d03e419602637515a80b3, type: 2}
+  _actorAsset:
+    m_AssetGUID: 8d01c0477e7f37644af79e1f62e13727
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1

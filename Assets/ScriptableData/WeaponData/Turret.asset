@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94352627b028ca7488c94d594a3c9dc6, type: 3}
+  m_Name: Turret
+  m_EditorClassIdentifier: 
+  uniqueId: 928d0f60-9e8a-4b24-af7e-8a31405a0c52
+  uniqueShortId: 4
+  _weaponSettings: {fileID: 11400000, guid: d79a827db12e77747b3df52b271d7edf, type: 2}
+  _attackCooldown: 0.5
+  _weaponPrefab:
+    m_AssetGUID: 067ddd227acd41147bd24775ad408ca6
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1
+  _attackStat: 10
+  _autoFire: 1
