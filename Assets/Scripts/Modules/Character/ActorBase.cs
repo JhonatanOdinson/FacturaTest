@@ -58,7 +58,7 @@ namespace Modules.Character
                 Death();
         }
 
-        public void StopActor(bool state)
+        public void ActivateActor(bool state)
         {
             _actorComponents.UpdateEnableComponents(state);
         }

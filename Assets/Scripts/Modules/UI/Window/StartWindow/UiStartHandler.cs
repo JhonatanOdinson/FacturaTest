@@ -1,6 +1,7 @@
 using Core;
 using Library.Scripts.Core;
 using Modules.UI.Interface;
+using Modules.UI.Window.IntroTipsWindow;
 using Modules.UI.Window.TouchInputWindow;
 using UnityEngine;
 
@@ -19,16 +20,15 @@ namespace Modules.UI.Window.StartWindow
 
         public void Destruct()
         {
-
+            
         }
 
         public void StartClickHandler()
         {
-            Debug.Log($"StartClickHandler H");
-            UiTouchInputWindow inputWindow = CommonComponents.UiCanvas.GetWindow<UiTouchInputWindow>();
-            _gameStateController.ChangeState(GameStateController.GameStateE.Play);
-            inputWindow.GetProvider().ShowWindow(null);
+            UiIntroTipsWindow introTipsWindow = CommonComponents.UiCanvas.GetWindow<UiIntroTipsWindow>();
+            _gameStateController.ChangeState(GameStateController.GameStateE.Idle);
             _window.GetProvider().HideWindow(null);
+            introTipsWindow.GetProvider().ShowWindow(null);
         }
     }
 }

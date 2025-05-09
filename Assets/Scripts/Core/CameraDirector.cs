@@ -41,7 +41,7 @@ namespace Core
         }
         
         private void OnStateChange(GameStateController.GameStateE gameStateE) {
-            if (gameStateE == GameStateController.GameStateE.Play)
+            if (gameStateE == GameStateController.GameStateE.Idle)
             {
                 AttachToActor(CommonComponents.ActorBaseController.GetPlayer().transform);
                 UpdatePosition(0);
@@ -50,15 +50,7 @@ namespace Core
         
         private Vector3 _camVelocity;
         private void UpdatePosition(float positionTime) {
-            /*var targetPosition = _target.transform.position + Offset.position;
-            if (transform.position != targetPosition) {
-                if (positionTime > 0) {
-                    transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _camVelocity, smoothTime, maxSpeed, positionTime);
-                }
-                else {
-                    transform.position = targetPosition;
-                }
-            }*/
+        
         }
         public void AttachToActor(Transform target)
         {

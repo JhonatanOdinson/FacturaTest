@@ -73,7 +73,7 @@ namespace Library.Scripts.Core
 
         public void FreeControllers()
         {
-            _actorBaseController.DestroyAllActors();
+            _actorBaseController.Free();
             _uiCanvas.Destruct();
             //_gameObjectController.FreeController();
             _touchInputController.Free();

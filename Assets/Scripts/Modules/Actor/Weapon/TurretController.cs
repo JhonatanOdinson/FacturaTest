@@ -25,6 +25,12 @@ namespace Modules.Actor.Weapon
             currentYRotation = 0f;
         }
 
+        public override void SetEnabled(bool state)
+        {
+            base.SetEnabled(state);
+            
+        }
+
         public override void UpdateExecute()
         {
             base.UpdateExecute();

@@ -20,7 +20,6 @@ namespace Modules.UI.Window.StartWindow
 
         private void OnStartClickHandler()
         {
-            Debug.Log($"OnStartClickHandler");
             _handler.StartClickHandler();
         }
 

@@ -30,7 +30,7 @@ namespace Modules.Actor
         private void PlacePlayer()
         {
             ActorBase actorBase = TakeActor(_scenarioData.Player,Vector3.zero);
-            actorBase.StopActor(true);
+            actorBase.ActivateActor(false);
         }
 
         private void OnFreeActorHandler(object actorId)

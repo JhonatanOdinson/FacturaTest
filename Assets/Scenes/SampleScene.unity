@@ -564,8 +564,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _loadWindowList:
-  - {fileID: 11400000, guid: 0aa5f918e199196459d8f34b8cac5c3a, type: 2}
   - {fileID: 11400000, guid: 1eade291b2e43d44ca8ee45e59616697, type: 2}
+  - {fileID: 11400000, guid: 192da6421f4974f479c6d90c0d731530, type: 2}
+  - {fileID: 11400000, guid: 0aa5f918e199196459d8f34b8cac5c3a, type: 2}
   _sceneComponents: {fileID: 788466391}
   _actorContainer: {fileID: 433405918}
 --- !u!4 &788466393

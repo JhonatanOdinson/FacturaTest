@@ -16,14 +16,14 @@ namespace Modules.Actor {
     public List<ActorBase> GetActors => _actorList;
     public CharacterBaseEvents BaseEvents => _characterBaseEvents;
 
-    private GameEvent OnChangeGameState;
+    public GameEvent OnChangeGameState;
     
     public ActorBase GetPlayer() {
       return GetActors.FirstOrDefault(e => e.Data.IsPlayer);
     }
 
     public void Init() {
-      OnChangeGameState.Subscribe(null,OnChangeGameStateHandler);
+      OnChangeGameState?.Subscribe(null,OnChangeGameStateHandler);
     }
 
     private void OnChangeGameStateHandler(object state)
@@ -31,7 +31,7 @@ namespace Modules.Actor {
       if (state is GameStateController.GameStateE gameStateE)
       {
         bool actorActiveState = gameStateE == GameStateController.GameStateE.Play;
-        _actorList.ForEach(e => e.StopActor(actorActiveState));
+        _actorList.ForEach(e => e.ActivateActor(actorActiveState));
       }
     }
 
@@ -75,6 +75,12 @@ namespace Modules.Actor {
       _actorList.Remove(actor);
       actor.OnDeath -= OnActorDeathHandler;
       //actor.DestroyActor(destructData);
+    }
+
+    public void Free()
+    {
+      OnChangeGameState?.Unsubscribe(null,OnChangeGameStateHandler);
+      DestroyAllActors();
     }
 
     public void DestroyAllActors() {

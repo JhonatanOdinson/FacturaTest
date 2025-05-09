@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c30f2e4eae393b449b443b31d74f2d7, type: 3}
+  m_Name: CharacterBaseEvents
+  m_EditorClassIdentifier: 
+  _onActorDeath: {fileID: 11400000, guid: d35261759d9077544a866d0ab0d3b438, type: 2}
+  _onActorDamage: {fileID: 11400000, guid: 18013054964bfcb41a907262ab0009aa, type: 2}
+  _onActorSpawn: {fileID: 11400000, guid: 496201bbd09fbde49985f4dc06e09a71, type: 2}
+  _onActorRespawn: {fileID: 11400000, guid: 6d74f4c41ba4fd348bf055f83b91199d, type: 2}

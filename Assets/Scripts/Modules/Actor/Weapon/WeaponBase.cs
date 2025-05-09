@@ -40,6 +40,11 @@ namespace Modules.Actor.Weapon
             
         }
 
+        public void SetEnabled(bool state)
+        {
+            _weaponComponents.ForEach(e => e.SetEnabled(state));
+        }
+
         private void ApplyPositionAndRotation()
         {
             transform.localPosition = WeaponSettings.StartPositionOffset;

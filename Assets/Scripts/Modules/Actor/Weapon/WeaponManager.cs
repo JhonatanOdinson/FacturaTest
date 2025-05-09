@@ -15,7 +15,13 @@ namespace Modules.Actor.Weapon
             base.Init(actorBase);
             SetWeaponFromData(actorBase);
         }
-        
+
+        public override void SetEnabled(bool state)
+        {
+            base.SetEnabled(state);
+            _weapon.SetEnabled(state);
+        }
+
         private void SetWeaponFromData(ActorBase actorBase) {
             if (actorBase.Data.WeaponDataEx == null) return;
             var weaponData = actorBase.Data.WeaponDataEx;
