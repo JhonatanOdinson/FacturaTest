@@ -27,7 +27,6 @@ namespace Modules.Character
             _actorComponents.Init(this);
             Subscribe();
             _charDataEx.SetActor(this);
-            //_audioCreatureInstance = new AudioCreatureInstance(this);
         }
         
         public void SetCurrentTarget(ActorBase target) {
@@ -59,6 +58,11 @@ namespace Modules.Character
                 Death();
         }
 
+        public void StopActor(bool state)
+        {
+            _actorComponents.UpdateEnableComponents(state);
+        }
+        
         private void Death()
         {
             OnDeath?.Invoke(this);

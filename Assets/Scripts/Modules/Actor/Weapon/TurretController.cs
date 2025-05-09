@@ -25,12 +25,18 @@ namespace Modules.Actor.Weapon
             currentYRotation = 0f;
         }
 
+        public override void UpdateExecute()
+        {
+            base.UpdateExecute();
+            UpdateRotation();
+        }
+
         public void OnRotate(Vector2 vector2)
         {
             input = vector2;
         }
 
-        private void Update()
+        private void UpdateRotation()
         {
             float deltaRotation = input.x * rotationSpeed * Time.deltaTime;
             currentYRotation += deltaRotation;
@@ -38,6 +44,12 @@ namespace Modules.Actor.Weapon
 
             float clampedY = baseYRotation + currentYRotation;
             _turretTop.rotation = Quaternion.Euler(0f, clampedY, 0f);
+        }
+
+        public override void Destruct()
+        {
+            base.Destruct();
+            _inputController.OnJoystickPerformed -= OnRotate;
         }
     }
 }

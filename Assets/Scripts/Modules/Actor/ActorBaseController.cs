@@ -30,7 +30,8 @@ namespace Modules.Actor {
     {
       if (state is GameStateController.GameStateE gameStateE)
       {
-        
+        bool actorActiveState = gameStateE == GameStateController.GameStateE.Play;
+        _actorList.ForEach(e => e.StopActor(actorActiveState));
       }
     }
 

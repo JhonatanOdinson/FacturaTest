@@ -8,8 +8,7 @@ namespace Modules.Actor.Weapon
     {
         [ShowInInspector] private WeaponBase _weapon;
         [SerializeField] private Transform _weaponContainer;
-        [SerializeField] private bool _canUpdate = true;
-        
+
         public WeaponBase Weapon => _weapon;
         
         public override void Init(ActorBase actorBase) {
@@ -28,7 +27,7 @@ namespace Modules.Actor.Weapon
         }
         
         public override void UpdateExecute() {
-            if(!_canUpdate) return;
+            if(!IsEnable) return;
             if (_weapon != null) _weapon.UpdateExecute();
         }
         

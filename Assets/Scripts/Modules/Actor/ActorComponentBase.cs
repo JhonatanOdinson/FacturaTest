@@ -8,12 +8,19 @@ namespace Modules.Actor {
     [Title("Titles and Headers")]
     
     [SerializeField,HideInInspector] private ActorBase actorBase;
+    private bool _isEnabled = true;
     public ActorBase ActorOwner => actorBase;
+    public bool IsEnable => _isEnabled;
 
     public virtual void Init(ActorBase actorBase) {
       this.actorBase = actorBase;
     }
 
+    public virtual void SetEnabled(bool state)
+    {
+      _isEnabled = state;
+    }
+    
     public virtual void UpdateExecute() {
     }
 

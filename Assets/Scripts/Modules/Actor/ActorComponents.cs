@@ -19,7 +19,12 @@ namespace Modules.Actor {
       }
       _isInit = true;
     }
-    
+
+    public void UpdateEnableComponents(bool state)
+    {
+      _components.ForEach(e => e.SetEnabled(state));
+    }
+
     public void UpdateExecute() {
       if(!_isInit) return;
       for (int i = _components.Count - 1; i >= 0; i--) {

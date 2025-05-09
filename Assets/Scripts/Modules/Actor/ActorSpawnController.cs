@@ -29,7 +29,8 @@ namespace Modules.Actor
 
         private void PlacePlayer()
         {
-            TakeActor(_scenarioData.Player,Vector3.zero);
+            ActorBase actorBase = TakeActor(_scenarioData.Player,Vector3.zero);
+            actorBase.StopActor(true);
         }
 
         private void OnFreeActorHandler(object actorId)
@@ -72,25 +73,28 @@ namespace Modules.Actor
             return new Vector3(Random.Range(-halfX, halfX), 0, Random.Range(-halfZ, halfZ));
         }
 
-        private void TakeActor(CharacterData characterData, Vector3 placeTransformPosition, int id = 0)
+        private ActorBase TakeActor(CharacterData characterData, Vector3 placeTransformPosition, int id = 0)
         {
+            ActorBase actorBase;
             var actorPoolElement = _actorPool.Take();
             if (actorPoolElement.ActorBaseRef)
             {
-                CommonComponents.ActorBaseController.RespawnCharacter(actorPoolElement.ActorBaseRef,
+                actorBase = CommonComponents.ActorBaseController.RespawnCharacter(actorPoolElement.ActorBaseRef,
                     placeTransformPosition);
             }
             else
             {
                 actorPoolElement.Init();
-                ActorBase actorBase = CommonComponents.ActorBaseController.CreateCharacter(
+                actorBase = CommonComponents.ActorBaseController.CreateCharacter(
                     new CharacterDataEx(characterData), placeTransformPosition, actorPoolElement.transform);
                 actorPoolElement.SetActor(actorBase);
             }
+
             actorPoolElement.SetId(id);
             actorPoolElement.gameObject.SetActive(true);
+            return actorBase;
         }
-        
+
 
         public void Free()
         {

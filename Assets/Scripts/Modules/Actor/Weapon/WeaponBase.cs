@@ -55,7 +55,9 @@ namespace Modules.Actor.Weapon
             return !_waitingCooldown;
         }
         
-        public virtual void UpdateExecute() {
+        public virtual void UpdateExecute()
+        {
+            UpdateComponents();
             if (_waitingCooldown) {
                 _currentCooldown -= Time.deltaTime;
                 OnCooldownUpdate?.Invoke(_currentCooldown, _weaponManager.GetAttackCooldown());
@@ -69,7 +71,14 @@ namespace Modules.Actor.Weapon
                 Attack();
             }
         }
-        
+
+        private void UpdateComponents()
+        {
+            for (int i = _weaponComponents.Count - 1; i >= 0; i--) {
+                _weaponComponents[i].UpdateExecute();
+            }
+        }
+
         protected void WaitCooldown() {
             if(_waitingCooldown) return;
             _waitingCooldown = true;

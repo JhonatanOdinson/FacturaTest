@@ -10,6 +10,9 @@ namespace Modules.Actor.Weapon
             _weaponRef = weapon;
         }
 
+        public virtual void UpdateExecute() {
+        }
+        
         public virtual void Destruct() {
       
         }

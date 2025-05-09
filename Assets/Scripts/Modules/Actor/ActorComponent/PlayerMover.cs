@@ -15,21 +15,15 @@ namespace Modules.Actor.ActorComponent
         [SerializeField] private float _moveSpeed = 5f;
 
         private float _distanceTraveled = 0f;
-        private bool _isMove;
+     
         public override void Init(ActorBase actorBase)
         {
-            CommonComponents.GameStateController.OnStateChange += CheckMoveAccess;
             base.Init(actorBase);
-        }
-
-        private void CheckMoveAccess(GameStateController.GameStateE gameStateE)
-        {
-            _isMove = gameStateE == GameStateController.GameStateE.Play;
         }
 
         public override void FixedUpdateExecute(float deltaTime)
         {
-            if (!_isMove) return;
+            if (!IsEnable) return;
             _distanceTraveled += _moveSpeed * Time.fixedDeltaTime;
             
             float currentX = Mathf.Sin(_distanceTraveled * _frequency) * _amplitude;
