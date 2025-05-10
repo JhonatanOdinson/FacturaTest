@@ -1,4 +1,5 @@
 using HutongGames.PlayMaker.Actions;
+using Library.Scripts.Core;
 using Modules.UI.Interface;
 using Modules.UI.Window.StartWindow;
 using UnityEngine;
@@ -21,10 +22,15 @@ namespace Modules.UI.Window.IntroTipsWindow
         public void ShowWindow(object ignoreTweens)
         {
             bool ignore = ignoreTweens is bool ? (bool)ignoreTweens : false;
-            Debug.Log($"Ignore: {ignore}");
             _window.Show();
             if(!ignore)
                 _window.ShowBg(true);
+            CommonComponents.TouchInputController.OnClickPerformed += OnConfirmClickHandler;
+        }
+
+        private void OnConfirmClickHandler()
+        {
+            _window.OnConfirmClickHandler();
         }
 
         public void HideWindow(object ignoreTweens)
@@ -33,6 +39,7 @@ namespace Modules.UI.Window.IntroTipsWindow
             _window.Hide();
             if(!ignore)
              _window.ShowBg(false);
+            CommonComponents.TouchInputController.OnClickPerformed -= OnConfirmClickHandler;
         }
 
         public void Destruct()

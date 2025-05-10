@@ -24,7 +24,6 @@ namespace Core
 
         [Button]
         public void ChangeState(GameStateE state) {
-            Debug.Log($"ChangeState");
             if(_currentState == state) return;
             _currentState = state;
 

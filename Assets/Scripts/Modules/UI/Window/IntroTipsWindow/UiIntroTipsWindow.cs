@@ -17,10 +17,9 @@ namespace Modules.UI.Window.IntroTipsWindow
         {
             _provider.Init(this);
             _handler.Init(this);
-            CommonComponents.TouchInputController.OnClickPerformed += OnConfirmClickHandler;
         }
 
-        private void OnConfirmClickHandler()
+        public void OnConfirmClickHandler()
         {
             _handler.ConfirmClickHandler();
         }
@@ -32,7 +31,6 @@ namespace Modules.UI.Window.IntroTipsWindow
 
         public void ShowBg(bool state)
         {
-            Debug.Log($"ShowBg: {state}");
             if(state) _aimTips.PlayTips();
             else _aimTips.StopTips();
             
@@ -62,7 +60,6 @@ namespace Modules.UI.Window.IntroTipsWindow
         public override void Destruct()
         {
             KillTweens();
-            CommonComponents.TouchInputController.OnClickPerformed += OnConfirmClickHandler;
         }
     }
 }

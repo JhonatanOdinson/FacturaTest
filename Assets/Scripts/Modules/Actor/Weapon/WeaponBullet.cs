@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using Modules.Actor.Components;
-using Modules.Character;
+using Modules.ActorObject;
+using Modules.ActorObject.ActorObjectSpawnData;
 using Modules.Damage;
+using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 namespace Modules.Actor.Weapon
 {
-    public class WeaponBullet : MonoBehaviour
+    public class WeaponBullet : ActorObjectBase
     {
         [SerializeField] private Rigidbody _rigid;
         [SerializeField] private float _lifeTime = 1f;
@@ -18,19 +18,34 @@ namespace Modules.Actor.Weapon
         [SerializeField] private PoolDataBase _DestroyParticles;*/
         
         protected WeaponDataEx _weaponDataEx;
-        private float _currTime;
+        [SerializeField]private float _currTime;
         private IReceiveDamage _damaged;
+        [SerializeField]private bool _isFree; 
 
-        public Action OnDestroy;
-        
-        public virtual void Init(WeaponDataEx weaponDataEx) {
-            _weaponDataEx = weaponDataEx;
+        public override void Init(object spawnData)
+        {
+            BulletSpawnData bulletSpawnData = (BulletSpawnData)spawnData;
+            _weaponDataEx = bulletSpawnData.WeaponDataEx;
+            SetPositionAndRotation(bulletSpawnData.Position,bulletSpawnData.Rotation);
+            AddForce(bulletSpawnData.Force);
+            _currTime = 0;
+            _isFree = false;
+            _rigid.velocity = Vector3.zero;
             //ObjectPoolController.SpawnObject(new PoolObjectParameter(_SpawnParticles, transform.position, transform.rotation));
         }
-        
-        protected void Update() {
+
+        private void SetPositionAndRotation(Vector3 position, Vector3 rotation)
+        {
+            transform.position = position;
+            transform.LookAt(rotation);
+        }
+
+        protected void Update()
+        {
+            if (_isFree) return;
             if (_currTime >= _lifeTime) {
-                Destruct();
+                Free();
+                _isFree = true;
                 return;
             }
 
@@ -38,7 +53,7 @@ namespace Modules.Actor.Weapon
         }
         
         protected virtual void OnCollisionEnter(Collision collision) {
-            var receiveDamage = collision.gameObject.GetComponent<IReceiveDamage>();
+           /* var receiveDamage = collision.gameObject.GetComponent<IReceiveDamage>();
             if (receiveDamage == null || _damaged == receiveDamage) return;
             //if(_weaponDataEx.GetOwner.HasDamageReceiver(receiveDamage) || receiveDamage == _weaponDataEx.WeaponRef) return;
             receiveDamage.ReceiveDamage(new DamageData(_weaponDataEx, _weaponDataEx.GetOwner.Data.GetCurrAttack));
@@ -47,17 +62,20 @@ namespace Modules.Actor.Weapon
             }
             //ObjectPoolController.SpawnObject(new PoolObjectParameter(_CollisionParticles, transform.position, transform.rotation));
             if (_destroyOnCollision)
-                Destruct();
-            //_damagedList.Add(receiveDamage);
+                Free();
+            //_damagedList.Add(receiveDamage);*/
         }
 
-        public void AddForce(float force, Transform firePoint)
+        [Button]
+        private void AddForce(Vector3 force)
         {
-            _rigid.AddForce(firePoint.forward * force * _rigid.mass);
+            _rigid.AddForce(force * _rigid.mass);
         }
-        
-        protected void Destruct() {
-            OnDestroy?.Invoke();
+
+        public override void Destruct()
+        {
+            base.Destruct();
+            
             //ObjectPoolController.SpawnObject(new PoolObjectParameter(_DestroyParticles, transform.position, transform.rotation));
             //Destroy(gameObject);
         }

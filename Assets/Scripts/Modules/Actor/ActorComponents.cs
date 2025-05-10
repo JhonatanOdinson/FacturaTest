@@ -33,12 +33,12 @@ namespace Modules.Actor {
       }
     }
     
-    public void FixedUpdateExecute(float deltaTime) {
+    public void FixedUpdateExecute() {
       if(!_isInit) return;
       //if(actorBaseRef.Object!=null && !actorBaseRef.Object.Runner.IsForward) return;
       for (int i = _components.Count - 1; i >= 0; i--) {
         //if (_components[i]!= null)
-          _components[i].FixedUpdateExecute(deltaTime);
+          _components[i].FixedUpdateExecute();
       }
     }
 

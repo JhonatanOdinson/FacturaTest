@@ -6,7 +6,6 @@ using Modules.Character;
 using Modules.ScriptableObjects;
 using Modules.Tool.UniversalPool;
 using Unity.AI.Navigation;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 namespace Modules.Actor

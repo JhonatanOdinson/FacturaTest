@@ -10,6 +10,7 @@ namespace Modules.Character
         [SerializeField] protected CharacterDataEx _charDataEx;
         [SerializeField] private ActorComponents _actorComponents;
         [SerializeField] private DamageReceiver _damageReceiver;
+        [SerializeField] private Transform _healthBarAnchor;
         
         private ActorBase _currentTarget;
         
@@ -17,8 +18,10 @@ namespace Modules.Character
         public ActorComponents Components => _actorComponents;
         public DamageReceiver DamageReceiver => _damageReceiver;
         public ActorBase CurrentTarget => _currentTarget;
-        
+        public Transform HealthBarAnchor => _healthBarAnchor;
+
         public event Action<ActorBase> OnDeath;
+        public event Action<ActorBase> OnFree;
         public Action<ActorBase, ActorBase> OnTargetChange;
         public event Action OnDestruct;
         
@@ -40,7 +43,7 @@ namespace Modules.Character
         }
 
         public void FixedUpdate() {
-            _actorComponents.FixedUpdateExecute(Time.fixedDeltaTime);
+            _actorComponents.FixedUpdateExecute();
         }
         
         private void ReceiveDamage(DamageData damageData) {
@@ -81,6 +84,12 @@ namespace Modules.Character
    
             _damageReceiver.OnReceiveDamage -= ReceiveDamage;
             Destroy(gameObject);
+        }
+
+        public void ActorFree()
+        {
+            OnFree?.Invoke(this);
+            ActivateActor(false);
         }
     }
 }

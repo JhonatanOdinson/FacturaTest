@@ -11,17 +11,26 @@ namespace Modules.RoadSegmentController
         [SerializeField] private Transform _nextSegmentAnchor;
         [SerializeField] private RoadSegmentActivator _activator;
         [SerializeField] private NavMeshSurface _navMeshSurface;
+        
+        [SerializeField]private bool _isStartSegment;
+        
         public Transform NextSegmentAnchor => _nextSegmentAnchor;
+        public bool IsStartSegment => _isStartSegment;
 
         public GameEvent OnPlaceSegment;
         public GameEvent OnFreeSegment;
-        
+
         public event Action OnSegmentActive;
         public event Action OnSegmentFree; 
 
         public void Init()
         {
             Subscribe();
+        }
+
+        public void SetStartSegment(bool state)
+        {
+            _isStartSegment = state;
         }
 
         private void Subscribe()
@@ -43,11 +52,13 @@ namespace Modules.RoadSegmentController
         public void SetPosition(Vector3 position)
         {
             gameObject.transform.position = position;
-            OnPlaceSegment.Check(null,_navMeshSurface);
+            if(!_isStartSegment)
+                OnPlaceSegment.Check(null,_navMeshSurface);
         }
 
         public override void Free()
         {
+            SetStartSegment(false);
             OnFreeSegment.Check(null,(int)transform.position.z);
             OnSegmentFree?.Invoke();
             Unsubscribe();

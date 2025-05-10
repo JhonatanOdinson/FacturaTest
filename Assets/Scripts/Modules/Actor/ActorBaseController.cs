@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Core;
@@ -17,6 +18,8 @@ namespace Modules.Actor {
     public CharacterBaseEvents BaseEvents => _characterBaseEvents;
 
     public GameEvent OnChangeGameState;
+    public event Action<ActorBase> OnCreateActor;
+    public event Action<ActorBase> OnDestroyActor;
     
     public ActorBase GetPlayer() {
       return GetActors.FirstOrDefault(e => e.Data.IsPlayer);
@@ -42,12 +45,14 @@ namespace Modules.Actor {
       actor.Init(dataEx);
       _actorList.Add(actor);
       actor.OnDeath += OnActorDeathHandler;
+      OnCreateActor?.Invoke(actor);
       return actor;
     }
 
     public ActorBase RespawnCharacter(ActorBase actorBase, Vector3 pos) {
       actorBase.transform.position = GetPositionOnNavMesh(pos);
       actorBase.Data.Revive();
+      OnCreateActor?.Invoke(actorBase);
       return actorBase;
     }
 
@@ -55,7 +60,7 @@ namespace Modules.Actor {
       HitData hitData = new HitData(actorBase.Data, actorBase.Data.LastDamage);
       _characterBaseEvents.OnActorDeath.Check(actorBase.Data, hitData);
       //_deathHandler.DeathProcess(actorBase);
-      DestroyActor(actorBase);
+      DestructActor(actorBase);
     }
 
     private Vector3 GetPositionOnNavMesh(Vector3 pos) {
@@ -66,15 +71,11 @@ namespace Modules.Actor {
       return pos;
     }
 
-    public void DestroyActor(ActorBase actor, bool destructData = false) {
-      if (actor.Data.IsPlayer) {
-        //playerDestroy.Check(null, actor.Data);
-        //_player = null;
-      }
-      //_onActorDestroy.Check(null, actor.Data);
+    public void DestructActor(ActorBase actor, bool destructData = false) {
       _actorList.Remove(actor);
-      actor.OnDeath -= OnActorDeathHandler;
-      //actor.DestroyActor(destructData);
+      //actor.Data.OnDeadEvent -= OnActorDeath;
+      OnDestroyActor?.Invoke(actor);
+      actor.Destruct();
     }
 
     public void Free()
@@ -85,7 +86,7 @@ namespace Modules.Actor {
 
     public void DestroyAllActors() {
       for (int i = _actorList.Count - 1; i >= 0; i--) {
-        DestroyActor(_actorList[i], true);
+        DestructActor(_actorList[i], true);
       }
       ReleaseAllActors();
       //_firstPlayerSpawnList.Clear();

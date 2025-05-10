@@ -7,36 +7,39 @@ using UnityEngine;
 namespace Modules.Actor.ActorComponent
 {
     public class PlayerMover : ActorComponentBase
-    {
-        [SerializeField] private Rigidbody _rigidbody;
-
+    {  
         [SerializeField] private float _frequency = 0.1f;
         [SerializeField] private float _amplitude = 2f;
         [SerializeField] private float _moveSpeed = 5f;
+        [SerializeField] private float _turnSpeed = 5f;
 
         private float _distanceTraveled = 0f;
+        private Vector3 _previousPosition;
      
         public override void Init(ActorBase actorBase)
         {
             base.Init(actorBase);
+            _previousPosition = transform.position;
         }
 
-        public override void FixedUpdateExecute(float deltaTime)
+        public override void UpdateExecute()
         {
             if (!IsEnable) return;
-            _distanceTraveled += _moveSpeed * Time.fixedDeltaTime;
-            
-            float currentX = Mathf.Sin(_distanceTraveled * _frequency) * _amplitude;
-            float nextX = Mathf.Sin((_distanceTraveled + 0.1f) * _frequency) * _amplitude;
+            _distanceTraveled += _moveSpeed * Time.deltaTime;
 
-            Vector3 currentPosition = new Vector3(currentX, transform.position.y, _distanceTraveled);
-            Vector3 nextPosition = new Vector3(nextX, transform.position.y, _distanceTraveled + 0.1f);
+            float x = Mathf.Sin(_distanceTraveled * _frequency) * _amplitude;
+            Vector3 newPosition = new Vector3(x, transform.position.y, _distanceTraveled);
             
-            Vector3 direction = (nextPosition - currentPosition).normalized;
-            Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+            transform.position = newPosition;
             
-            _rigidbody.MovePosition(currentPosition);
-            _rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, 0.2f));
+            Vector3 moveDirection = (newPosition - _previousPosition).normalized;
+            if (moveDirection.sqrMagnitude > 0.0001f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _turnSpeed * Time.deltaTime);
+            }
+
+            _previousPosition = newPosition;
         }
 
     }

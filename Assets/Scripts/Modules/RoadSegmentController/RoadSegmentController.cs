@@ -20,15 +20,21 @@ namespace Modules.RoadSegmentController
         {
             for (int i = 0; i < _startSegmentCount; i++)
             {
-                PlaceSegment();
-            }   
+                PlaceSegment(i == 0);
+            }
+        }
+
+        private void OnSegmentActivateHandler()
+        {
+            PlaceSegment();
         }
 
         [Button]
-        private void PlaceSegment()
+        private void PlaceSegment(bool isStartSegment = false)
         {
             var segmentList = _roadSegmentPool.GetBusy().ToList();
             var segment = TakeSegment();
+            segment.SetStartSegment(isStartSegment);
             if (segmentList.Any())
             {
                 segment.SetPosition(segmentList.Last().NextSegmentAnchor.position);
@@ -43,7 +49,7 @@ namespace Modules.RoadSegmentController
         private RoadSegment TakeSegment()
         {
             var segment = _roadSegmentPool.Take();
-            segment.OnSegmentActive += PlaceSegment;
+            segment.OnSegmentActive += OnSegmentActivateHandler;
             segment.Init();
             segment.gameObject.SetActive(true);
             return segment;
@@ -51,7 +57,7 @@ namespace Modules.RoadSegmentController
 
         private void ReturnSegment(RoadSegment segment)
         {
-            segment.OnSegmentActive -= PlaceSegment;
+            segment.OnSegmentActive -= OnSegmentActivateHandler;
             segment.gameObject.SetActive(false);
             _roadSegmentPool.Return(segment);
         }
@@ -60,7 +66,7 @@ namespace Modules.RoadSegmentController
         {
             foreach (var segment in _roadSegmentPool.GetBusy())
             {
-                segment.OnSegmentActive -= PlaceSegment;
+                segment.OnSegmentActive -= OnSegmentActivateHandler;
             }
             _roadSegmentPool.Clear();
         }

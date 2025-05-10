@@ -17,7 +17,6 @@ namespace Modules.Actor.Weapon
         private TouchInputController _inputController;
         public override void Init(WeaponBase weapon)
         {
-            Debug.Log($"Init tc");
             base.Init(weapon);
             _inputController = CommonComponents.TouchInputController;
             _inputController.OnJoystickPerformed += OnRotate;

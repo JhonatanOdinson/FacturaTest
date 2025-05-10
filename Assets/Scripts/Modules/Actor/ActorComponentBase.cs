@@ -24,7 +24,7 @@ namespace Modules.Actor {
     public virtual void UpdateExecute() {
     }
 
-    public virtual void FixedUpdateExecute(float deltaTime) {
+    public virtual void FixedUpdateExecute() {
     }
 
     public virtual void Destruct() {

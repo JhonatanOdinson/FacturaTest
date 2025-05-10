@@ -23,7 +23,6 @@ namespace Modules.UI.Window.UiStartWindow {
     }
 
     private void OnClickHandler() {
-      Debug.Log($"OnClicked");
       if (!_interactable) return;
       transform.DOScale(new Vector3(0.9f, 0.9f, 0), 0.1f)
         .OnComplete(()=> {

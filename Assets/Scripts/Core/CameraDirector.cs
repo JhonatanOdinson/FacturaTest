@@ -20,7 +20,7 @@ namespace Core
         private Transform _target;
         
         public Camera Camera => _camera;
-        
+
         public void Init() {
             //var cameraData = GetCameraRef.GetUniversalAdditionalCameraData();
             //cameraData.cameraStack.Add(CommonComponents.Instance.UiCanvasRef.UiCameraRef);
@@ -44,14 +44,14 @@ namespace Core
             if (gameStateE == GameStateController.GameStateE.Idle)
             {
                 AttachToActor(CommonComponents.ActorBaseController.GetPlayer().transform);
-                UpdatePosition(0);
+            }
+            else if (gameStateE == GameStateController.GameStateE.None)
+            {
+                UnAttach();
             }
         }
         
         private Vector3 _camVelocity;
-        private void UpdatePosition(float positionTime) {
-        
-        }
         public void AttachToActor(Transform target)
         {
             _target = target;
@@ -63,6 +63,7 @@ namespace Core
         }
         
         public void UnAttach() {
+            _target = null;
             _targetCamera.Follow = null;
             _targetCamera.LookAt = null;
             _targetCamera.gameObject.SetActive(false);

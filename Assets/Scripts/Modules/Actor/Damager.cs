@@ -1,10 +1,11 @@
 using System.Threading;
 using Library.Scripts.Core;
+using Modules.Actor.Components;
 using Modules.Character;
 using Modules.Damage;
 using UnityEngine;
 
-namespace Modules.Actor.Components {
+namespace Modules.Actor {
   public class Damager : MonoBehaviour {
     public enum CheckTypeE {
       OnCollision = 0,

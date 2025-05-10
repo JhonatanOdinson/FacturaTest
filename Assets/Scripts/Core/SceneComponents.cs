@@ -1,11 +1,11 @@
 //using Library.Scripts.Modules.SpawnManager;
 
-using Core;
 using Modules.Actor;
+using Modules.ActorObject;
 using Modules.RoadSegmentController;
 using UnityEngine;
 
-namespace Library.Scripts.Core
+namespace Core
 {
     public class SceneComponents : MonoBehaviour
     {
@@ -14,19 +14,23 @@ namespace Library.Scripts.Core
         [SerializeField] private RoadSegmentController _roadSegmentController;
 
         [SerializeField] private ActorSpawnController _actorSpawnController;
+
+        [SerializeField] private ActorObjectController _actorObjectController;
        //[SerializeField] private SpawnManager _spawnManager;
        
         //public SpawnManager SpawnManager => _spawnManager;
         public CameraDirector CameraDirector => _cameraDirector;
         public RoadSegmentController RoadSegmentController => _roadSegmentController;
         public ActorSpawnController ActorSpawnController => _actorSpawnController;
+        public ActorObjectController ActorObjectController => _actorObjectController;
         
         public void Init()
         {
-            _roadSegmentController?.Init();
             _actorSpawnController?.Init();
+            _roadSegmentController?.Init();
+            _actorObjectController.Init();
             _cameraDirector?.Init();
-            // _spawnManager?.Init();
+            
         }
 
         public void Destruct()
@@ -34,6 +38,7 @@ namespace Library.Scripts.Core
             _cameraDirector?.Destruct();
             _actorSpawnController?.Free();
             _roadSegmentController?.Free();
+            _actorObjectController.Free();
             //_spawnManager?.Free();
         }
     }

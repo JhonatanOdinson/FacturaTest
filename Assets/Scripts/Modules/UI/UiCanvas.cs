@@ -30,15 +30,24 @@ namespace Library.Scripts.Modules.Ui
       }
 
       public T GetWindow<T>() where T : WindowBase {
-         Debug.Log($"GetWindow: {typeof(T)}");
          return (T) _windowList.First(e => e.GetType() == typeof(T));
       }
       
       private void FixedUpdate()
       {
-         OnUpdateWindow?.Invoke();
+         //OnUpdateWindow?.Invoke();
       }
 
+      public static Vector2 WorldToUISpace(Camera cam/*,RectTransform parent*/, Vector3 worldPos) {
+         return cam.WorldToScreenPoint(worldPos);
+         
+        /* Vector3 screenPos = cam.WorldToScreenPoint(worldPos);
+         Vector2 movePos = Vector2.zero;
+         RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, screenPos,
+            null, out movePos);
+         return movePos;*/
+      }
+      
       public void Destruct()
       {
          foreach (WindowBase windowBase in _windowList)

@@ -23,7 +23,7 @@ namespace Modules.Actor
 
         public override void Free()
         {
-            
+            _actorBaseRef.ActorFree();
             gameObject.SetActive(false);
             base.Free();
         }

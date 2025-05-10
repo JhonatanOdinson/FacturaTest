@@ -20,7 +20,6 @@ namespace Modules.Actor.ActorComponent {
     {
       base.SetEnabled(state);
       EnableFsm(state);
-
     }
 
     /*public void SetFsmTemplate(FsmTemplate template, bool callStart = true) {
@@ -40,6 +39,7 @@ namespace Modules.Actor.ActorComponent {
     }
 
     public void EnableFsm(bool state) {
+      Debug.Log($"EnableFsm: {state}");
       if(!state) _aiFsm.SendEvent(GlobalEvents.ResetFSM);
       _aiFsm.enabled = state;
     }
