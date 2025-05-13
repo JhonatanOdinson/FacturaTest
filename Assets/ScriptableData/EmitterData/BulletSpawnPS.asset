@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c15f715d9bc5a649a1a32c9f8a3ddaa, type: 3}
+  m_Name: BulletSpawnPS
+  m_EditorClassIdentifier: 
+  uniqueId: 9a0ef87a-7295-45eb-b2ee-55cdaa2935c9
+  uniqueShortId: 327
+  StartCount: 1
+  _enableInstructions: []
+  _disableInstructions: []
+  _emitterRef:
+    m_AssetGUID: 569f263d1cc635f4596b16b91f93e80c
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1

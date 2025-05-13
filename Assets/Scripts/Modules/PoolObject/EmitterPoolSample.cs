@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Library.Scripts.Core;
 using Modules.Actor;
 using Modules.Actor.Components;
 using Modules.Emitters;
@@ -26,20 +27,8 @@ namespace Modules.PoolObject {
 
     public override void ActivateObj() {
       base.ActivateObj();
-     /* if (_audio != null)
-        AudioController.Play(_audio, transform);*/
-
       _isFree = false;
-      //InitDamagers();
     }
-
-    /*private void InitDamagers() {
-      _damagers.Clear();
-      foreach (var damager in GetComponentsInChildren<Damager>(true)) {
-        damager.Init(CharDataEx?.GetActorRef);
-        _damagers.Add(damager);
-      }
-    }*/
 
     private void UpdateToParams() {
       CheckStopEmitterType();
@@ -70,9 +59,7 @@ namespace Modules.PoolObject {
       if(_isFree) return;
       _isFree = true;
       CharDataEx = null;
-     /* if(_audio != null && _audio.type == AudioData.AudioTypeE.Looped)
-        AudioController.Stop(_audio, transform);
-      await CommonComponents.ObjectPoolController.ReturnObject(this, instantly);*/
+      await CommonComponents.ObjectPoolController.ReturnObject(this, instantly);
       ClearTransform();
       FreeDamagers();
     }

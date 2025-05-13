@@ -1,5 +1,4 @@
 using Modules.UI.Interface;
-using Modules.UI.Window.UiStartWindow;
 using UnityEngine;
 
 namespace Modules.UI.Window.StartWindow

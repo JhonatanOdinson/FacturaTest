@@ -1,7 +1,6 @@
 using DG.Tweening;
 using Library.Scripts.Core;
 using Modules.UI.Interface;
-using Modules.UI.Window.UiStartWindow;
 using UnityEngine;
 using UnityEngine.UI;
 

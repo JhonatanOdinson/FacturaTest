@@ -12,11 +12,11 @@ namespace Modules.PoolObject {
     [ShowInInspector] private static List<PoolBase> _activeObjects = new();
 
     public async Task LoadData() {
-      //await LoadAllObject();
+      await LoadAllObject();
     }
 
     private async Task LoadAllObject() {
-      await Addressables.LoadAssetsAsync<PoolDataBase>("poolObject", poolData => {
+      await Addressables.LoadAssetsAsync<PoolDataBase>("PoolObject", poolData => {
         PoolDict.Add(poolData, new Queue<PoolBase>());
         poolData.Parent = CreateParent(poolData.name);
         for (int i = 1; i <= poolData.StartCount; i++) {

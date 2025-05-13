@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Modules.UI.Window.UiStartWindow {
+namespace Modules.UI.Window {
   public class UiCustomButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     [SerializeField] private Button _button;
     [SerializeField] private TextMeshProUGUI _title;
@@ -41,6 +41,11 @@ namespace Modules.UI.Window.UiStartWindow {
       _title.color = color;
     }
 
+    public void SetTitle(string title)
+    {
+      _title.text = title;
+    }
+
     public void OnPointerEnter(PointerEventData eventData) {
       transform.DOScale(new Vector3(1.1f, 1.1f, 0), 0.1f);
       SetTitleColor(_highLightColor);
@@ -52,11 +57,15 @@ namespace Modules.UI.Window.UiStartWindow {
       SetTitleColor(_normalColor);
     }
     public void Show(bool value) {
+      gameObject.SetActive(value);
       if (value) {
-        gameObject.SetActive(true);
+        transform.localScale = Vector3.zero;
+        transform.DOScale(Vector3.one, 0.5f);
       }
     }
 
+    
+    
     public void Free() {
       DOTween.Kill(transform);
     }

@@ -16,8 +16,9 @@ MonoBehaviour:
   uniqueShortId: 2
   _isPlayer: 0
   _vitality: 20
-  _damage: 10
   _reward: 10
+  _speed: 0
+  _weaponData: {fileID: 11400000, guid: 08572d1aa6fe2084a83a1fa3dcd679c4, type: 2}
   _actorAsset:
     m_AssetGUID: aea6792151f63d04f91ac0b36095b86f
     m_SubObjectName: 

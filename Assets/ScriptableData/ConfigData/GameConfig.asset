@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   _gameScenario: {fileID: 11400000, guid: b4b53bce3bb3b674586fa973d772250a, type: 2}
+  _levelRange: 200

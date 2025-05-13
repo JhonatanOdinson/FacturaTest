@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Core;
 using Core.GameEvents;
+using Modules.Actor.Weapon;
 using Modules.Character;
 using Modules.Tool;
 using Sirenix.OdinInspector;
@@ -51,6 +52,7 @@ namespace Modules.Actor {
 
     public ActorBase RespawnCharacter(ActorBase actorBase, Vector3 pos) {
       actorBase.transform.position = GetPositionOnNavMesh(pos);
+      actorBase.transform.rotation = Quaternion.Euler(Vector3.zero);
       actorBase.Data.Revive();
       OnCreateActor?.Invoke(actorBase);
       return actorBase;
@@ -58,20 +60,22 @@ namespace Modules.Actor {
 
     private void OnActorDeathHandler(ActorBase actorBase) {
       HitData hitData = new HitData(actorBase.Data, actorBase.Data.LastDamage);
-      _characterBaseEvents.OnActorDeath.Check(actorBase.Data, hitData);
-      //_deathHandler.DeathProcess(actorBase);
-      DestructActor(actorBase);
+      if (hitData.DamageData.Damager is WeaponDataEx weaponDataEx) {
+        if(weaponDataEx.GetOwner.Data != actorBase.Data)
+          _characterBaseEvents.OnActorDeath.Check(actorBase.Data, hitData);
+      } //else _characterBaseEvents.OnActorDeath.Check(actorBase.Data, hitData);
+      
+      //DestructActor(actorBase);
     }
 
     private Vector3 GetPositionOnNavMesh(Vector3 pos) {
       if (NavMeshHelper.GetPointOnNavMesh(pos, out var hit, 5)) {
         return hit;
       }
-      Debug.Log("actor can`t find point on nav mesh");
       return pos;
     }
 
-    public void DestructActor(ActorBase actor, bool destructData = false) {
+    public void DestructActor(ActorBase actor) {
       _actorList.Remove(actor);
       //actor.Data.OnDeadEvent -= OnActorDeath;
       OnDestroyActor?.Invoke(actor);
@@ -86,7 +90,7 @@ namespace Modules.Actor {
 
     public void DestroyAllActors() {
       for (int i = _actorList.Count - 1; i >= 0; i--) {
-        DestructActor(_actorList[i], true);
+        DestructActor(_actorList[i]);
       }
       ReleaseAllActors();
       //_firstPlayerSpawnList.Clear();

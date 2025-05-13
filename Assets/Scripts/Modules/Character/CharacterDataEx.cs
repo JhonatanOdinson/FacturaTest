@@ -1,5 +1,7 @@
 ﻿using System;
+using Library.Scripts.Core;
 using Modules.Actor.Weapon;
+using Modules.Damage;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -17,12 +19,11 @@ namespace Modules.Character {
     [SerializeField] private int _maxVitality;
     [SerializeField] private int _currVitality;
     [SerializeField] private int _currAttack;
+    [SerializeField] private float _currSpeed;
     [SerializeField] private bool _isDead;
     [SerializeField] private DamageData _lastDamage;
     [ShowInInspector] private WeaponDataEx _weaponDataEx;
-    
-    private int _receiveDamageCount;
-    
+
     public event Action<int> OnVitalityChange;
     public event Action<CharacterDataEx> OnDeadEvent;
 
@@ -33,7 +34,7 @@ namespace Modules.Character {
     public int MaxVitality => _maxVitality;
     public int GetCurrVitality => _currVitality;
     public int GetCurrAttack => _currAttack;
-    public int ReceiveDamageCount => _receiveDamageCount;
+    public float GetCurrSpeed => _currSpeed;
     public bool IsPlayer => _data.IsPlayer;
     public bool IsDead => _isDead;
     public DamageData LastDamage => _lastDamage;
@@ -43,14 +44,9 @@ namespace Modules.Character {
       _data = data;
       _maxVitality = data.Vitality;
       _currVitality = _maxVitality;
-      //_currAttack = data.Damage;
+      _currSpeed = data.Speed;
       GenerateID();
       SetWeapon(_data.WeaponData);
-    }
-
-    public CharacterDataEx(CharacterDataEx dataEx) {
-      _uniqueId = dataEx.UniqueId;
-      _data = dataEx.Data;
     }
 
     public void GenerateID() {
@@ -67,17 +63,11 @@ namespace Modules.Character {
 
     public void ReceiveDamage(DamageData damageData) {
       if (_isDead) return;
-      /*CommonComponents.GetActorBaseController.CharacterBaseEvents.OnBeforeActorDamage.Check(this,
-        new HitData(this, damageData));*/
       int damageCount = damageData.Damage > _currVitality ? _currVitality : damageData.Damage;
+      CommonComponents.ActorBaseController.BaseEvents.OnActorDamaged.Check(this,
+        new HitData(this, new DamageData(damageData.Damager, damageCount)));
       _currVitality -= damageCount;
-      //_lastDamage = damageData;
-      _receiveDamageCount++;
-      
-
-      //here creating new DamageData for receiving true damage count (clamped to currVitality)
-      /*CommonComponents.GetActorBaseController.CharacterBaseEvents.OnActorDamaged.Check(this,
-        new HitData(this, new DamageData(damageData.Damager, damageCount)));*/
+      _lastDamage = damageData;
       OnVitalityChange?.Invoke(-damageData.Damage);
       if (_currVitality <= 0)
       {
@@ -88,6 +78,7 @@ namespace Modules.Character {
 
     public void Revive()
     {
+      _actorBaseRef.Init(this);
       _isDead = false;
       SetCurrVitality(_maxVitality);
     }

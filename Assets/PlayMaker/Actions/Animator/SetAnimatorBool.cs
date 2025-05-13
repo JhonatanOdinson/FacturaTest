@@ -54,6 +54,7 @@ namespace HutongGames.PlayMaker.Actions
 
         private void SetParameter()
 		{
+			Debug.Log($"SetParameter: {paramID},{Value.Value}");
             if (!UpdateCache(Fsm.GetOwnerDefaultTarget(gameObject)))
             {
                 Finish();

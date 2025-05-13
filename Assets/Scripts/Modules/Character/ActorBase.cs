@@ -1,6 +1,10 @@
 using System;
 using Modules.Actor;
 using Modules.Actor.Components;
+using Modules.Actor.Weapon;
+using Modules.Damage;
+using Modules.Emitters;
+using Modules.PoolObject;
 using UnityEngine;
 
 namespace Modules.Character
@@ -12,12 +16,11 @@ namespace Modules.Character
         [SerializeField] private DamageReceiver _damageReceiver;
         [SerializeField] private Transform _healthBarAnchor;
         
-        private ActorBase _currentTarget;
-        
+        [SerializeField] private PoolDataBase _deadParticles;
+
         public CharacterDataEx Data => _charDataEx;
         public ActorComponents Components => _actorComponents;
         public DamageReceiver DamageReceiver => _damageReceiver;
-        public ActorBase CurrentTarget => _currentTarget;
         public Transform HealthBarAnchor => _healthBarAnchor;
 
         public event Action<ActorBase> OnDeath;
@@ -30,12 +33,13 @@ namespace Modules.Character
             _actorComponents.Init(this);
             Subscribe();
             _charDataEx.SetActor(this);
+            _damageReceiver.Init(this);
+            _damageReceiver.OnReceiveDamage -= ReceiveDamage;
+            _damageReceiver.OnReceiveDamage += ReceiveDamage;
         }
-        
-        public void SetCurrentTarget(ActorBase target) {
-            var prevTarget = _currentTarget;
-            _currentTarget = target;
-            OnTargetChange?.Invoke(prevTarget, _currentTarget);
+
+        public void Attack(ActorBase target) {
+            _actorComponents.FetchComponent<WeaponManager>().Attack(target);
         }
         
         public void Update() {
@@ -47,8 +51,7 @@ namespace Modules.Character
         }
         
         private void ReceiveDamage(DamageData damageData) {
-            if(damageData.Damager is CharacterDataEx charDataEx && charDataEx == Data) return;
-            CharacterDataController.ReceiveDamage(_charDataEx, damageData);
+            _charDataEx.ReceiveDamage(damageData);
         }
         
         private void Subscribe() {
@@ -57,8 +60,13 @@ namespace Modules.Character
 
         private void OnDeadHandler(CharacterDataEx dataEx)
         {
-            if(dataEx.IsDead)
+            if (dataEx.IsDead)
+            {
+                _damageReceiver.OnReceiveDamage -= ReceiveDamage;
+                Unsubscribe();
                 Death();
+            }
+                
         }
 
         public void ActivateActor(bool state)
@@ -68,6 +76,7 @@ namespace Modules.Character
         
         private void Death()
         {
+            ObjectPoolController.SpawnObject(new PoolObjectParameter(_deadParticles, transform.position, transform.rotation));
             OnDeath?.Invoke(this);
         }
 
@@ -77,8 +86,6 @@ namespace Modules.Character
         
         public virtual void Destruct() {
             Unsubscribe();
-            //_charDataEx.AbilityDataManager.OnDestructActor();
-            //  _audioCreatureInstance.Destruct();
             _actorComponents.Destruct();
             _charDataEx.Destruct();
    

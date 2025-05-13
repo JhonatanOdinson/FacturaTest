@@ -7,7 +7,9 @@ namespace Library.Scripts.ScriptableObjects.GameConfig
     public class GameConfig : ScriptableObject
     {
         [SerializeField] private ScenarioData _gameScenario;
+        [SerializeField] private float _levelRange;
 
         public ScenarioData GameScenario => _gameScenario;
+        public float LevelRange => _levelRange;
     }
 }

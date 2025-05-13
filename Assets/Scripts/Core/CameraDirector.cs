@@ -67,6 +67,7 @@ namespace Core
             _targetCamera.Follow = null;
             _targetCamera.LookAt = null;
             _targetCamera.gameObject.SetActive(false);
+            _targetCamera.transform.position = Vector3.zero;
             _isAttached = false;
         }
         

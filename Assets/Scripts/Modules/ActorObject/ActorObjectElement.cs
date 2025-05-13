@@ -24,7 +24,8 @@ namespace Modules.ActorObject
 
         public override void Free()
         {
-            _actorObjectRef.OnDestroy -= OnDestroyHandler;
+            if(_actorObjectRef)
+                _actorObjectRef.OnDestroy -= OnDestroyHandler;
             gameObject.SetActive(false);
             base.Free();
         }

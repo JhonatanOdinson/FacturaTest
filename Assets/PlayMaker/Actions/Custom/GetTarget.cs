@@ -32,7 +32,7 @@ namespace PlayMaker.Actions.Custom {
       if (!actorPlayer)
         target.Value = null;
       else {
-        if( Distance(owner.transform, actorPlayer.transform) <= range);
+        if( Distance(owner.transform, actorPlayer.transform) <= range)
           target.Value = actorPlayer.gameObject;
       }
     }

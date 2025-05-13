@@ -11,12 +11,14 @@ namespace Modules.Character {
       [SerializeField] private bool _isPlayer;
       [SerializeField] private int _vitality;
       [SerializeField] private int _reward;
+      [SerializeField] private int _speed;
       [SerializeField] private WeaponData _weaponData;
       [SerializeField] private AssetReferenceInPrefab<ActorBase> _actorAsset;
 
       public bool IsPlayer => _isPlayer;
       public int Vitality => _vitality;
       public int Reward => _reward;
+      public float Speed => _speed;
       public AssetReferenceInPrefab<ActorBase> ActorAsset => _actorAsset;
       public WeaponData WeaponData => _weaponData;
   }

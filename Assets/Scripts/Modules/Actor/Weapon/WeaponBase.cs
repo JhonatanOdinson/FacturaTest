@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Modules.Character;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Modules.Actor.Weapon
 {
@@ -16,11 +17,10 @@ namespace Modules.Actor.Weapon
         protected bool _waitingCooldown;
         
         [SerializeField] private List<WeaponComponentBase> _weaponComponents = new();
-        
+
         public Action OnAttack;
         public Action<float, float> OnCooldownUpdate;
-        public Action<float, float> OnChargeProcess;
-        
+
         public ActorBase ActorRef => _actorRef;
         public WeaponDataEx WeaponDataEx => _weaponDataEx;
         
@@ -51,7 +51,7 @@ namespace Modules.Actor.Weapon
             transform.localEulerAngles = WeaponSettings.StartRotationOffset;
         }
         
-        public virtual void Attack(/*Transform target*/) {
+        public virtual void Attack(ActorBase target = null) {
             WaitCooldown();
             OnAttack?.Invoke();
         }

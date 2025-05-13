@@ -1,6 +1,7 @@
 using Core.GameEvents;
 using Modules.ActorObject;
 using Modules.ActorObject.ActorObjectSpawnData;
+using Modules.Character;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,7 +14,6 @@ namespace Modules.Actor.Weapon
        // [SerializeField] private WeaponBullet _bullet;
         [SerializeField] private Transform _firePoint;
         [SerializeField] private float _bulletForce = 1000f;
-        [SerializeField] protected UnityEvent _onAttack;
         [SerializeField] private GameEvent _onCreateBullet;
 
         //public WeaponBullet Bullet => _bullet;
@@ -21,11 +21,11 @@ namespace Modules.Actor.Weapon
         public float BulletForce => _bulletForce;
 
         [Button]
-        public override void Attack(/*Transform target*/)
+        public override void Attack(ActorBase target = null)
         {
-            base.Attack(/*target*/);
-            CreateBullet(/*target.position*/);
-            _onAttack?.Invoke();
+            base.Attack();
+            CreateBullet();
+            //_onAttack?.Invoke();
         }
 
         protected virtual void CreateBullet(/*Vector3 targetPosition, bool checkDistance = true*/)

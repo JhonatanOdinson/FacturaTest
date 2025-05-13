@@ -58,8 +58,8 @@ namespace Modules.RoadSegmentController
 
         public override void Free()
         {
-            SetStartSegment(false);
             OnFreeSegment.Check(null,(int)transform.position.z);
+            SetStartSegment(false);
             OnSegmentFree?.Invoke();
             Unsubscribe();
             gameObject.SetActive(false);

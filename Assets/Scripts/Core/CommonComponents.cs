@@ -4,6 +4,7 @@ using Library.Scripts.Modules.Tools;
 using Library.Scripts.Modules.Ui;
 using Modules.Actor;
 using Modules.Emitters;
+using Modules.GameProgressController;
 using Modules.PoolObject;
 using UnityEngine;
 
@@ -39,12 +40,14 @@ namespace Library.Scripts.Core
         [SerializeField] private ActorBaseController _actorBaseController;
         [SerializeField] private GameStateController _gameStateController;
         [SerializeField] private ObjectPoolController _objectPoolController;
+        [SerializeField] private RunProgressController _runProgressController;
 
         public static TouchInputController TouchInputController => _instance._touchInputController;
         public static UiCanvas UiCanvas => _instance._uiCanvas;
         public static ActorBaseController ActorBaseController => _instance._actorBaseController;
         public static GameStateController GameStateController => _instance._gameStateController;
         public static ObjectPoolController ObjectPoolController => _instance._objectPoolController;
+        public static RunProgressController RunProgressController => _instance._runProgressController;
 
         public static void LoadInstance()
         {
@@ -55,9 +58,7 @@ namespace Library.Scripts.Core
 
         public async Task Init(EnterPoint enterPoint)
         {
-            Debug.Log($"Init");
             _uiCanvas.Init(enterPoint.LoadWindowList);
-            //_gameObjectController.Init();
         }
 
         public async Task LoadData()
@@ -69,18 +70,18 @@ namespace Library.Scripts.Core
 
         public void InitGlobal()
         {
-            Debug.Log($"Init Global");
             _actorBaseController.Init();
             _gameStateController.Init();
             _touchInputController.Init();
+            _runProgressController.Init();
         }
 
         public void FreeControllers()
         {
+            _runProgressController.Free();
             _objectPoolController.FreeAllObject();
             _actorBaseController.Free();
             _uiCanvas.Destruct();
-            //_gameObjectController.FreeController();
             _touchInputController.Free();
         }
     }

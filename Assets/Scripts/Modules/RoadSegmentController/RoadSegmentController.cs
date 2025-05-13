@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
+using Core;
+using Core.GameEvents;
 using Modules.Tool.UniversalPool;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -9,10 +12,30 @@ namespace Modules.RoadSegmentController
     {
         [SerializeField] private int _startSegmentCount = 2;
         [SerializeField] private UniversalPool<RoadSegment> _roadSegmentPool;
-
+        [SerializeField] private GameEvent _onChangeGameState;
+        
         public void Init()
         {
             _roadSegmentPool.Initialize();
+            _onChangeGameState?.Subscribe(this,OnChangeGameStateHandler);
+            PlaceStartSegment();
+        }
+        
+        private void OnChangeGameStateHandler(object gameState)
+        {
+            if(gameState is GameStateController.GameStateE gameStateE)
+                if(gameStateE == GameStateController.GameStateE.None)
+                    Restart();
+        }
+
+        public void Restart()
+        {
+            List<RoadSegment> roadList = _roadSegmentPool.GetBusy().ToList();
+            for(int i = 0;i<roadList.Count;i++)
+            {
+                ReturnSegment(roadList[i]);
+            }
+
             PlaceStartSegment();
         }
 

@@ -25,9 +25,6 @@ namespace Modules.Actor.Weapon
         private void SetWeaponFromData(ActorBase actorBase) {
             if (actorBase.Data.WeaponDataEx == null) return;
             var weaponData = actorBase.Data.WeaponDataEx;
-           /* var weaponData = actorBase.IsInventory
-                ? new WeaponDataEx(actorBase.Data.WeaponDataEx.Data)
-                : actorBase.Data.WeaponDataEx;*/
             if (weaponData == null) return;
             SetWeapon(weaponData);
         }
@@ -43,6 +40,11 @@ namespace Modules.Actor.Weapon
             Destroy(_weapon.gameObject);
         }
 
+        public void Attack(ActorBase target) {
+            if (_weapon == null) return;
+            _weapon.Attack(target);
+        }
+        
         public void SetWeapon(WeaponDataEx weaponDataEx)
         {
             if (_weapon != null)

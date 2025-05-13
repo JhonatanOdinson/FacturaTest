@@ -2,7 +2,10 @@
 
 #if UNITY_5_5_OR_NEWER
 
+using Modules.Actor.ActorComponent;
+using Modules.Character;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace HutongGames.PlayMaker.Actions
 {
@@ -12,7 +15,7 @@ namespace HutongGames.PlayMaker.Actions
 	{
 		[RequiredField]
 		[Tooltip("The Game Object to work with. NOTE: The Game Object must have a NavMeshAgent component attached.")]
-		[CheckForComponent(typeof(UnityEngine.AI.NavMeshAgent))]
+		[CheckForComponent(typeof(ActorAI))]
 		public FsmOwnerDefault gameObject;
 		
 		[RequiredField]
@@ -29,7 +32,7 @@ namespace HutongGames.PlayMaker.Actions
 				return;
 			}
 			
-			_agent =  go.GetComponent<UnityEngine.AI.NavMeshAgent>();
+			_agent =  go.GetComponent<ActorAI>().NavMeshAgent;
 		}	
 		
 		public override void Reset()
@@ -54,8 +57,8 @@ namespace HutongGames.PlayMaker.Actions
 			{
 				return;
 			}
-			
-			_agent.isStopped = isStopped.Value;
+			if(_agent.isOnNavMesh)
+				_agent.isStopped = isStopped.Value;
 		}
 
 	}

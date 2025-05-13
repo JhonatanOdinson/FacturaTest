@@ -17,6 +17,7 @@ MonoBehaviour:
   _isPlayer: 1
   _vitality: 100
   _reward: 0
+  _speed: 5
   _weaponData: {fileID: 11400000, guid: 85ef1e4bb05d03e419602637515a80b3, type: 2}
   _actorAsset:
     m_AssetGUID: 8d01c0477e7f37644af79e1f62e13727

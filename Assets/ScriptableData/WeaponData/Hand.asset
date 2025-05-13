@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniqueId: 
   uniqueShortId: 3
-  _weaponSettings: {fileID: 0}
+  _weaponSettings: {fileID: 11400000, guid: d79a827db12e77747b3df52b271d7edf, type: 2}
+  _attackCooldown: 0
   _weaponPrefab:
-    m_AssetGUID: 
+    m_AssetGUID: f7351a11d8a3e3c40a1caec8b0e9dbca
     m_SubObjectName: 
     m_SubObjectType: 
-    m_EditorAssetChanged: 0
+    m_EditorAssetChanged: 1
   _attackStat: 10
+  _autoFire: 0

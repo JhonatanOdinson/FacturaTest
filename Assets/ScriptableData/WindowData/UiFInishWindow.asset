@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 152f76b49d2819948a1414b57a61c453, type: 3}
+  m_Name: UiFInishWindow
+  m_EditorClassIdentifier: 
+  _showOnStart: 0
+  _windowRef:
+    m_AssetGUID: 9fe91dfbc69dd8541984dc937ae8c39b
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1
